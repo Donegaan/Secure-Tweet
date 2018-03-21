@@ -1,0 +1,1 @@
+var stuff = $("div.js-tweet-text-container > p").text("Blocked");
