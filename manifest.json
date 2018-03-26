@@ -1,5 +1,5 @@
 {
-    "name" : "Key Management",
+    "name" : "Secure Tweet",
     "version": "1.0",
     "manifest_version" : 2,
     "description" : "Key Management Extension to secure social media apps",
@@ -18,5 +18,10 @@
             ],
             "run_at": "document_end"
         }
+    ],
+    "permissions": [
+        "tabs",
+        "http://*/",
+        "https://*/"
     ]
 }
