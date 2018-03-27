@@ -9,7 +9,7 @@
     "content_scripts": [
         {
             "matches": [
-                "*://*/*"
+                "*://*.twitter.com/*"
             ],
             "js": [
                 "jquery-3.3.1.min.js",
