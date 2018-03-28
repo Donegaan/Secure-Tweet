@@ -5,9 +5,7 @@
 group = { // Key Management with JSON object
     "key": "password",
 };
-things={
-    
-};
+var stack=[];
 var parameters = {
     "iter": 1000
 };
@@ -40,6 +38,8 @@ function encrypt() {
 
         var parsed = JSON.parse(cipherTextJson);
         // console.log(cipherTextJson);
-        $(this).text(parsed.ct + "҂" + parsed.salt + "؏" + parsed.iv + "௳"); // Displays cipher text in tweet
+        $(this).text(parsed.ct); // Displays cipher text in tweet
+        stack.push(cipherTextJson);
     });
 }
+
