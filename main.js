@@ -1,7 +1,6 @@
-// var cipherTextJson = {};
-// var password = "password";
+
 group = { // Key Management with JSON object
-    "key": "password",
+    "key": "pass",
 };
 var stack=[];
 var parameters = {
