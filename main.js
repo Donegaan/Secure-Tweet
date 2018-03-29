@@ -21,18 +21,39 @@ $(function () { // Take in input
     });
 });
 
+// chrome.storage.local.clear(function() {
+//     var error = chrome.runtime.lastError;
+//     if (error) {
+//         console.error(error);
+//     }
+// });
 $(function (){ // Encypt submitted text
     $('#encryptSubmit').click(function(){
         var encryptText = sjcl.encrypt(group.key,$('#encryptInput').val(),parameters,rp);
         // stack.push(encryptText);
         
         var parsed = JSON.parse(encryptText);
+        // console.log(parsed);
         var ct=parsed.ct;
-        chrome.storage.local.set({ct : encryptText}, function(){ // Store encrypted json object
-            console.log('Value is set to ' + encryptText+ " CT: "+ct);
+        var obj={};
+        obj[ct]=encryptText;
+        chrome.storage.local.set(obj, function(){ // Store encrypted json object
+            console.log('Value is set to ' + obj+ " CT: "+ct);
         });
         $('#displayEncrypted').text(ct);
+        
     });
 });
 
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (var key in changes) {
+      var storageChange = changes[key];
+      console.log('Storage key "%s" in namespace "%s" changed. ' +
+                  'Old value was "%s", new value is "%s".',
+                  key,
+                  namespace,
+                  storageChange.oldValue,
+                  storageChange.newValue);
+    }
+});
 
