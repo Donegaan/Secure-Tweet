@@ -1,19 +1,37 @@
 <html>
-    <head>
-        <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="sjcl.js"></script>
-        <script src="decrypt.js"></script>
-        <script src="main.js"></script>
-    </head>
-    <body>
-        <h2 id="greet">Key Manager</h2>
+
+<head>
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="sjcl.js"></script>
+    <script src="decrypt.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <h2 id="greet">Key Manager</h2>
+
+
+    <button class="tablink" id="CryptoTab">Crypto</button>
+    <button class="tablink" id="GroupTab">Group</button>
+
+    <div id="Crypto" class="tabcontent">
+        <h2></h2>
         <input type="text" id="keyTextInput" value="" placeholder="Enter decryption key">
         <input type="submit" id="keyInput" value="Submit">
 
         <input type="text" id="encryptInput" placeholder="Enter text to encrypt">
         <input type="submit" id="encryptSubmit" value="Encrypt">
         <h2 id="displayEncrypted"></h2>
-    </body>
+    </div>
 
-    
+    <div id="Group" class="tabcontent" style="display:none">
+        <h2></h2>
+        <input type="text" id="groupTextInput" value="" placeholder="Enter group username">
+        <input type="submit" id="groupInput" value="Add to Group">
+        <input type="submit" id="groupRemove" value="Remove from Group">
+        <input type="submit" id="getKeyInput" value="Get Key">
+        <h2 id="giveKey"></h2>
+    </div>
+
+</body>
 </html>
