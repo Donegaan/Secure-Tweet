@@ -6,12 +6,11 @@ var parameters = {
 var rp = {};
 
 $(function () { // Take in input
-    $('#keyInput').click(function () {
+    $('#keyInput').click(function () { // Decrypt text
         chrome.storage.local.get('group', function (result) {
             var key = result.group.key[0] + '';
             if (key === $('#keyTextInput').val()) { // Display decrypted tweet if key is correct
                 chrome.tabs.executeScript({
-                    // code: '$("div.js-tweet-text-container > p").text("'+decryptedText+'")'
                     file: 'decrypt.js'
                 });
             } else {
@@ -21,19 +20,16 @@ $(function () { // Take in input
     });
 
     $('#encryptSubmit').click(function () { // Encypt submitted text
-        chrome.storage.local.get('group', function (result) {
+        chrome.storage.local.get('group', function (result) { // Get group from storage
             var key = result.group.key[0] + '';
             if (key == null) {
                 alert("No group key found");
             } else { // Valid key so encrypt
                 var encryptText = sjcl.encrypt(key, $('#encryptInput').val(), parameters, rp);
-                // stack.push(encryptText);
-
                 var parsed = JSON.parse(encryptText);
-                // console.log(parsed);
                 var ct = parsed.ct;
                 var obj = {};
-                obj[ct] = encryptText;
+                obj[ct] = encryptText; // Cipher text as key for storage
                 chrome.storage.local.set(obj, function () { // Store encrypted json object
                     console.log('Value is set to ' + obj + " CT: " + ct);
                 });
@@ -43,15 +39,12 @@ $(function () { // Take in input
     });
 
     $('#groupInput').click(function () { // Add user to group
-
-        // console.log(randKey);
         var name = $('#groupTextInput').val();
         console.log(name);
         chrome.storage.local.get('group', function (result) { // Get group info
             var groupInfo = result.group;
             if (groupInfo == null) { // If group isn't found
                 var randKey = sjcl.random.randomWords(1, 0); // Create key
-                // console.log(randKey);
                 groupInfo = {
                     'key': randKey,
                     'users': [name]
@@ -61,9 +54,7 @@ $(function () { // Take in input
                 groupInfo.users.push(name);
                 console.log('group found');
             }
-            chrome.storage.local.set({
-                'group': groupInfo
-            }, function () { // Store changed info
+            chrome.storage.local.set({'group': groupInfo}, function () { // Store changed info
                 console.log('Group is set to ' + groupInfo);
             });
         });
@@ -97,10 +88,10 @@ $(function () { // Take in input
             if (groupInfo == null) { // If group isn't found   
                 console.log("No group found");
             } else {
-                var users = groupInfo.users;
+                var users = groupInfo.users; // Get users
                 var name = $('#groupTextInput').val();
                 var index = users.indexOf(name);
-                if (index > -1) {
+                if (index > -1) { // if name found
                     console.log("NAME MATCH");
                     $('#giveKey').text(groupInfo.key);
                 }
@@ -126,10 +117,3 @@ $(function () { // Take in input
         document.getElementById('Group').style.display = "block";
     });
 });
-
-function getKey() {
-    chrome.storage.local.get('group', function (result) {
-        var group = result.group;
-        return group.key[0];
-    });
-}
